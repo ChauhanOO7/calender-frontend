@@ -26,6 +26,7 @@ const EventCreation = ({ accessToken }) => {
     };
 
     try {
+      // sending data to google calender api or storing data over there.
       const response = await fetch("https://www.googleapis.com/calendar/v3/calendars/primary/events?key=AIzaSyDXin55RK-fyMFmlGHV6vdRr3hUIRjGJ0o", {
         method: 'POST',
         headers: {
@@ -34,8 +35,6 @@ const EventCreation = ({ accessToken }) => {
         },
         body: JSON.stringify(event),
       });
-//extract all data
-
 
       if (response.ok) {
         setSuccess(true);
@@ -53,7 +52,7 @@ const EventCreation = ({ accessToken }) => {
 
   const fetchEvents = async () => {
     settable(true);
-
+    // getting stored data from google calender api.
     const res = await fetch("https://www.googleapis.com/calendar/v3/calendars/primary/events?key=AIzaSyDXin55RK-fyMFmlGHV6vdRr3hUIRjGJ0o",{
       headers: {
         'Authorization': `Bearer ${accessToken}`,
