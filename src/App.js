@@ -1,25 +1,29 @@
-import logo from './logo.svg';
+import React, { useEffect, useState } from 'react';
+import GoogleSignIn from './components/GoogleSignIn';
+import EventCreation from './components/EventCreation';
 import './App.css';
 
-function App() {
+const App = () => {
+  const [accessToken, setAccessToken] = useState(null);
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const accessToken = params.get('token');
+    if (accessToken) {
+      setAccessToken(accessToken);
+    }
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app-container">
+      <h1>Google Calendar Integration</h1>
+      {!accessToken ? (
+        <GoogleSignIn setAccessToken={setAccessToken} />
+      ) : (
+        <EventCreation accessToken={accessToken} />
+      )}
     </div>
   );
-}
+};
 
 export default App;
